@@ -1,0 +1,10 @@
+title: "Tech Notes"
+description: "技术笔记与踩坑记录"
+theme: jekyll-theme-cayman
+lang: zh-CN
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+plugins:
+  - jekyll-seo-tag
