@@ -1,5 +1,7 @@
 title: "Tech Notes"
 description: "技术笔记与踩坑记录"
+baseurl: /blog
+url: https://foxlesbiao.github.io
 theme: jekyll-theme-cayman
 lang: zh-CN
 markdown: kramdown
