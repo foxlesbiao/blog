@@ -9,4 +9,4 @@ title: 技术笔记
 
 ## 文章列表
 
-- [SQLite FTS5 跨架构迁移踩坑记：从 x86 到 ARM64]({% post_url 2026-06-11-sqlite-fts5-cross-architecture-migration %})
+- [SQLite FTS5 跨架构迁移踩坑记：从 x86 到 ARM64]({% post_url 2026-06-10-sqlite-fts5-cross-architecture-migration %})
