@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "SQLite FTS5 跨架构迁移踩坑记：从 x86 到 ARM64"
-date: 2026-06-11
+date: 2026-06-10
 tags: [SQLite, FTS5, ARM64, 迁移, Armbian, Hermes Agent]
 lang: zh-CN
 ---
