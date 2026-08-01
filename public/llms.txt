@@ -1,0 +1,21 @@
+# Illya·Lily·Iris·Alice
+
+> 修车、折腾、写代码
+
+## 关于
+
+电动摩托车售后技术支持 / 自托管NAS / AI Agent / Linux运维 / DIY硬件折腾
+
+## 主要内容
+
+- Hermes Agent 多模型路由、记忆系统、知识库架构设计
+- NAS 自托管部署（飞牛OS + Docker）
+- Linux 运维（Armbian/Debian，Cloudflare透明代理，路由器安全加固）
+- 电摩改装、阳台光伏、窗户新风系统等DIY项目
+- ESP32 + 米家智能能源系统开发
+
+## 链接
+
+- 博客: https://foxlesbiao.github.io/blog/
+- GitHub: https://github.com/foxlesbiao
+- RSS: https://foxlesbiao.github.io/blog/rss.xml
