@@ -3,11 +3,11 @@ import type { SiteConfig } from "@/types/siteConfig";
 const SITE_LANG = "zh_CN";
 
 export const siteConfig: SiteConfig = {
-	title: "Tech Notes",
-	subtitle: "技术笔记与踩坑记录",
+	title: "Illya·Lily·Iris·Alice",
+	subtitle: "修车、折腾、写代码",
 	site_url: "https://foxlesbiao.github.io/blog",
-	description: "技术笔记与踩坑记录，涵盖 Hermes Agent、NAS 运维、家庭能源系统、系统架构设计等内容。",
-	keywords: ["Tech Notes", "Hermes", "博客", "技术博客", "NAS", "能源系统", "静态博客"],
+	description: "电动摩托车售后技术支持 / 自托管NAS / AI Agent / Linux运维 / DIY硬件折腾 / 电摩改装 / 阳台光伏",
+	keywords: ["Illya", "Hermes Agent", "OpenViking", "NAS", "飞牛OS", "Armbian", "Docker", "自托管", "AI Agent", "电摩改装", "光伏", "ESP32", "OpenWrt", "Linux运维"],
 	themeColor: {
 		hue: 165,
 		defaultMode: "system",
