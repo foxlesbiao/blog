@@ -58,7 +58,7 @@ export const siteConfig: SiteConfig = {
 		showLastModified: true,
 		outdatedThreshold: 30,
 		sharePoster: true,
-		generateOgImages: true,
+		generateOgImages: false,
 	},
 	bangumi: { userId: "", mode: "dynamic", apiUrl: "https://bgmapi.anibt.net", subjectBaseUrl: "https://bgmmi.anibt.net/subject/", categoryOrder: ["anime", "book", "music", "game"] },
 	anime: { bilibili: { uid: "" } },
