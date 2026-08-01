@@ -23,6 +23,15 @@ jobs:
         with:
           node-version: 22
       - uses: actions/configure-pages@v5
+      - name: Install MiSans system font
+        run: |
+          mkdir -p /tmp/misans-ttf
+          for f in MiSans-Regular MiSans-Medium MiSans-Bold MiSans-Light MiSans-Normal MiSans-Semibold; do
+            curl -sL "https://raw.githubusercontent.com/dsrkafuu/misans/main/raw/Normal/ttf/${f}.ttf" -o "/tmp/misans-ttf/${f}.ttf"
+          done
+          sudo cp /tmp/misans-ttf/*.ttf /usr/local/share/fonts/
+          sudo fc-cache -f -v
+          fc-list | grep -i misans
       - run: npm install
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
