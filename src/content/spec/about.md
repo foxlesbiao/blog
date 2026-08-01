@@ -1,29 +1,37 @@
 # 关于我 / About Me
 
-你好！我是 **夏叶** ，一个在数字世界中默默无闻的一片叶子。
+你好！我是 **Illya-Lily-Iris·Alice**，一个在数字与现实之间反复横跳的技术爱好者。
 
-## 🛠️ 关于本站
+## 职业背景
 
-这个网站使用 **Astro** 框架构建，采用了 [Firefly](https://github.com/CuteLeaf/Firefly) 模板，Firefly 是基于 [Fuwari](https://github.com/saicaca/fuwari) 的二次开发。
+电动摩托车售后技术支持，主要负责极核（ZEEHO）品牌的售后技术支持与故障处理。
 
-**Firefly** 是一款基于 Astro 框架和 Fuwari 模板开发的清新美观且现代化个人博客主题模板，专为技术爱好者和内容创作者设计。该主题融合了现代 Web 技术栈，提供了丰富的功能模块和高度可定制的界面，让您能够轻松打造出专业且美观的个人博客网站。
+- 三电系统诊断：动力电池包 / BMS / 电机控制器 / 充电系统
+- 整车控制器（VCU）故障码读取与分析
+- 车联网模块（T-BOX）调试与售后升级
+- 燃油摩托车辅修：发动机维修、电喷系统（EFI）诊断
+- 工具：万用表、诊断仪、示波器
 
+从网络应用技术专业转入新能源售后，把计算机网络和嵌入式基础用在了摩托车上。
 
-**🖥️在线预览： [Firefly - Demo site](https://firefly.cuteleaf.cn/)**
+## 技术兴趣
 
-**🏠我的博客： [https://blog.cuteleaf.cn](https://blog.cuteleaf.cn/)**
+业余时间折腾自托管服务和 AI Agent。
 
-**📝Firefly使用文档： [https://docs-firefly.cuteleaf.cn](https://docs-firefly.cuteleaf.cn/)**
+- **自托管 / NAS**：飞牛OS + Docker
+- **AI Agent**：Hermes Agent 长期协作，多模型路由、记忆系统、知识库（OpenViking）
+- **Linux / 运维**：Armbian / Debian，Cloudflare 透明代理，路由器安全加固
+- **开源项目**：GitHub 上有 mikanani-subscriber、WLED-translations、steam-web-api-skill 等
+- **ESP32 / IoT**：光伏接入米家生态，智能能源系统开发
+- **DIY**：电摩改装、阳台光伏、窗户新风系统、自建房电气施工
+- 有电工证，能焊能改能嵌入式
 
-**⭐Firefly开源地址：[https://github.com/CuteLeaf/Firefly](https://github.com/CuteLeaf/Firefly)** 
+## 个人爱好
 
-**⭐Fuwari开源地址：[https://github.com/saicaca/fuwari](https://github.com/saicaca/fuwari)**
-
-::github{repo="CuteLeaf/Firefly"}
-
-::github{repo="saicaca/fuwari"}
+- **二次元**：百合作品优先，读日文轻小说
+- **游戏**：Steam 200+ 游戏，关注《蓝色星原 旅谣》
+- **摩托车**：燃油和电动都玩，修车也是爱好
 
 ---
 
-*感谢你的来访！希望在这里能找到对你有用的内容！*
-
+*感谢你的来访！希望在这里能找到对你有用的内容。*
