@@ -1,0 +1,19 @@
+{
+  "name": "@fontsource/misans",
+  "version": "1.0.0",
+  "description": "Self-host the MiSans font",
+  "main": "index.css",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "default": "./index.css"
+    },
+    "./*": {
+      "default": "./*.css"
+    },
+    "./files/*": {
+      "default": "./files/*"
+    },
+    "./metadata.json": "./metadata.json"
+  }
+}
