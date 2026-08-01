@@ -3,17 +3,19 @@
   "version": "1.0.0",
   "description": "Self-host the MiSans font",
   "main": "index.css",
-  "license": "MIT",
+  "types": "index.d.css.ts",
   "exports": {
     ".": {
+      "types": "./index.d.css.ts",
       "default": "./index.css"
     },
-    "./*": {
-      "default": "./*.css"
-    },
-    "./files/*": {
-      "default": "./files/*"
-    },
-    "./metadata.json": "./metadata.json"
-  }
+    "./*": { "default": "./*.css" },
+    "./*.css": { "default": "./*.css" },
+    "./files/*": { "default": "./files/*" },
+    "./files/*.woff2": { "default": "./files/*.woff2" },
+    "./package.json": "./package.json",
+    "./metadata.json": "./metadata.json",
+    "./unicode.json": "./unicode.json"
+  },
+  "license": "MIT"
 }

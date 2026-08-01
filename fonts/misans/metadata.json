@@ -1,22 +1,13 @@
 {
-  "familyName": "MiSans",
-  "version": "1.0.0",
-  "description": "MiSans font",
-  "license": "MIT",
-  "weights": [
-    300,
-    350,
-    400,
-    500,
-    600,
-    700
-  ],
-  "styles": [
-    "normal"
-  ],
-  "subsets": [
-    "all"
-  ],
+  "id": "misans",
+  "family": "MiSans",
+  "subsets": ["latin", "chinese-simplified"],
+  "weights": [300, 350, 400, 500, 600, 700],
+  "styles": ["normal"],
+  "defSubset": "latin",
   "variable": false,
-  "lastModified": "2024-01-01"
+  "lastModified": "2024-01-01",
+  "version": "v1",
+  "category": "sans-serif",
+  "type": "google"
 }
