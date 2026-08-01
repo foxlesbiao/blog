@@ -1,7 +1,6 @@
 import { defineConfig } from "astro/config";
 import svelte from "@astrojs/svelte";
 import sitemap from "@astrojs/sitemap";
-import rehypeExternalLinks from "rehype-external-links";
 
 export default defineConfig({
   site: "https://foxlesbiao.github.io",
@@ -9,9 +8,6 @@ export default defineConfig({
   trailingSlash: "always",
   integrations: [svelte(), sitemap()],
   markdown: {
-    rehypePlugins: [
-      [rehypeExternalLinks, { target: "_blank", rel: ["noopener", "noreferrer"] }],
-    ],
     shikiConfig: {
       theme: "vitesse-dark",
       wrap: false,
