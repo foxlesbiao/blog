@@ -2,11 +2,76 @@ title: "Tech Notes"
 description: "技术笔记与踩坑记录"
 baseurl: /blog
 url: https://foxlesbiao.github.io
-theme: jekyll-theme-cayman
+
+remote_theme: mmistakes/minimal-mistakes
+minimal_mistakes_skin: "dark"
+
 lang: zh-CN
+locale: zh-CN
+
+# 搜索
+search: true
+search_full_content: true
+
+# 作者
+author:
+  name: "foxlesbiao"
+  avatar: 
+  bio: "技术笔记与踩坑记录"
+  location: "湛江"
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/foxlesbiao"
+
+# 页脚
+footer:
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/foxlesbiao"
+
+# 默认布局
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: false
+      share: false
+      related: true
+      toc: true
+      toc_sticky: true
+      toc_label: "目录"
+
+# 分页
+paginate: 10
+paginate_path: /page:num/
+
+# 插件
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jekyll-include-cache
+  - jekyll-seo-tag
+
+# Markdown
 markdown: kramdown
 kramdown:
   input: GFM
   syntax_highlighter: rouge
-plugins:
-  - jekyll-seo-tag
+  syntax_highlighter_opts:
+    block:
+      line_numbers: true
+
+# 排除
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
