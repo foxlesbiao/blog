@@ -17,7 +17,12 @@ export const siteConfig: SiteConfig = {
 		border: true,
 		followTheme: false,
 	},
-	favicon: [],
+	favicon: [
+		{ src: "/favicon/favicon-192.png", sizes: "192x192", type: "image/png" },
+		{ src: "/favicon/favicon-32.png", sizes: "32x32", type: "image/png" },
+		{ src: "/favicon/favicon-16.png", sizes: "16x16", type: "image/png" },
+		{ src: "/favicon/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+	],
 	navbar: {
 		logo: {
 			type: "icon",
@@ -58,7 +63,7 @@ export const siteConfig: SiteConfig = {
 		showLastModified: true,
 		outdatedThreshold: 30,
 		sharePoster: true,
-		generateOgImages: false,
+		generateOgImages: true,
 	},
 	bangumi: { userId: "", mode: "dynamic", apiUrl: "https://bgmapi.anibt.net", subjectBaseUrl: "https://bgmmi.anibt.net/subject/", categoryOrder: ["anime", "book", "music", "game"] },
 	anime: { bilibili: { uid: "" } },
