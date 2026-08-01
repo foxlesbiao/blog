@@ -84,8 +84,7 @@
     "unist-util-visit": "^5.1.0",
     "wrangler": "^4.114.0",
     "rehype-callouts": "^2.2.0",
-    "rehype-external-links": "^3.0.0",
-    "@fontsource/jetbrains-mono": "^5.2.6"
+    "rehype-external-links": "^3.0.0"
   },
   "devDependencies": {
     "@astrojs/ts-plugin": "^1.10.10",
