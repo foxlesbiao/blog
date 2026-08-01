@@ -41,6 +41,24 @@ export const fontsList: FontDefinition[] = [
 		},
 		fallbacks: ["sans-serif"],
 	},
+	{
+		name: "JetBrains Mono",
+		cssVariable: "--font-jetbrains-mono",
+		provider: "fontsource",
+		weights: ["400", "700"],
+		styles: ["normal"],
+		subsets: ["latin", "cyrillic"],
+		fallbacks: [
+			"ui-monospace",
+			"SFMono-Regular",
+			"Menlo",
+			"Monaco",
+			"Consolas",
+			"Liberation Mono",
+			"Courier New",
+			"monospace",
+		],
+	},
 ];
 
 export const fontConfig: FontSelectionConfig = {
@@ -49,6 +67,6 @@ export const fontConfig: FontSelectionConfig = {
 	bannerTitleFont: "--font-misans",
 	bannerSubtitleFont: "--font-misans",
 	navbarTitleFont: "",
-	codeFont: "",
+	codeFont: "--font-jetbrains-mono",
 	subsetFonts: {},
 };
