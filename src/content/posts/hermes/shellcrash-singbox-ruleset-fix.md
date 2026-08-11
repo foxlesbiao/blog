@@ -1,5 +1,5 @@
 ---
-title: "ShellCrash sing-box 规则集"不生效"？模板规则被丢弃的修复记录"
+title: "ShellCrash sing-box 规则集不生效？模板规则被丢弃的修复记录"
 published: 2026-08-11
 description: "ShellCrash sing-box 内核规则模板的分流规则完全不生效——规则集下载了但没被引用。完整诊断过程 + 持久化修复方案。"
 tags: ["ShellCrash", "sing-box", "路由器", "OpenWrt", "规则分流"]
@@ -7,7 +7,7 @@ category: "NAS"
 slug: shellcrash-singbox-ruleset-fix
 ---
 
-# ShellCrash sing-box 规则集"不生效"？模板规则被丢弃的修复记录
+# ShellCrash sing-box 规则集不生效？模板规则被丢弃的修复记录
 
 ## 问题
 
