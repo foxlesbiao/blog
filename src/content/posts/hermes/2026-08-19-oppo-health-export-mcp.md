@@ -148,6 +148,8 @@ OPPO 健康库里部分字段**不是直觉单位**，分析时最容易算错�
 
 > 给想「免 root 分发 hook 模块」的人一条排查捷径：先看目标 App 的 manifest 有没有 `android:sharedUserId`——只要命中了厂商系统 uid（如 `oplus`、`miui`、`huawei` 之类），LSPatch 重签名立刻报废，别浪费时间。
 
+> **测试环境说明**：以上 hook 模块仅在 **一加 13T（OPPO/ColorOS ROM）及 OPPO 设备**上验证过；其他品牌 / 型号 / ROM 未实测，不能保证兼容，自行安装风险自负。
+
 ## 总结
 
 - **逆向层的核心**：libxposed 新 API + 钩对加解密类拿密钥 + 延迟虚拟打开，避免早期反射崩 App。
