@@ -137,6 +137,17 @@ OPPO 健康库里部分字段**不是直觉单位**，分析时最容易算错�
 
 > 光照/户外是 OPPO 健康里很有价值的维度（对应维生素 D、昼夜节律）；达标题直接映射设备设定的「每日光照目标」。
 
+### 实测结论：为什么不做「免 root」分发
+
+常有朋友问：能不能把模块**内置进 APK、免 root**给普通人用？我实测了 **LSPatch** 方案，结论是**此路不通**，记录如下省得后人重复踩坑：
+
+- **静态 OK**：LSPatch 能顺利把 dbkeyhook 模块内置进 OPPO 健康 APK 并重打包（该 App **未加固**）。
+- **真机安装 ❌**：报错 `INSTALL_FAILED_SHARED_USER_INCOMPATIBLE: oplus named app is not match signature`。
+- **根因**：OPPO 健康是 **ColorOS 平台签名共享 uid（`android:sharedUserId="oplus"`）** 的系统应用，只接受带平台签名的同 uid 安装；LSPatch 重签名后 uid 签名不匹配，系统直接拒绝。
+- **因此免 root 绕不开**：要 hook 它，只能是 **KernelSU/Magisk + LSPosed** 这条真 root 路径（即本仓库模块的默认用法）。
+
+> 给想「免 root 分发 hook 模块」的人一条排查捷径：先看目标 App 的 manifest 有没有 `android:sharedUserId`——只要命中了厂商系统 uid（如 `oplus`、`miui`、`huawei` 之类），LSPatch 重签名立刻报废，别浪费时间。
+
 ## 总结
 
 - **逆向层的核心**：libxposed 新 API + 钩对加解密类拿密钥 + 延迟虚拟打开，避免早期反射崩 App。
