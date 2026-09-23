@@ -36,4 +36,5 @@ package/
 # vibe coding
 .codex*
 .claude
-.mimocode
+.mimocodeblog-drafts/
+package-lock.json
