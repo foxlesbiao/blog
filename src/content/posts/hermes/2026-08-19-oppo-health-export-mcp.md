@@ -150,6 +150,23 @@ OPPO 健康库里部分字段**不是直觉单位**，分析时最容易算错�
 
 > **测试环境说明**：以上 hook 模块仅在 **一加 13T（OPPO/ColorOS ROM）及 OPPO 设备**上验证过；其他品牌 / 型号 / ROM 未实测，不能保证兼容，自行安装风险自负。
 
+## 近期更新（v5.3.7 → v5.3.9b）
+
+版本迭代中又踩了一轮新坑，补充记录：
+
+| 坑 | 修复 |
+|---|---|
+| 模块 APK 里没有 libsqlcipher.so，无法直接加载 | 不自带 so，反射宿主的 ClassLoader 拿 zetetic SQLCipher 类 |
+| 主进程加载 SQLCipher native 失败（clns-11 namespace 拒绝） | 只在 `:SportDaemonService` 进程放行导出，其余进程直接跳过 |
+| 宿主 native 未就绪时 hook 触发过早 | openDatabase 失败重试（6 次 × 5s），等宿主加载完成 |
+| 6.7.19 版健康 App 懒加载 + 保活，App 活着时 hook 不会重新触发 | 手动导出 = 先 su 强杀健康 App 再拉起 |
+| 健康 App UID 无权在 /data/local/tmp 建文件，密钥落盘失败 | 兜底写 cacheDir，UI 端用 su 读取 |
+| 上传时手机在外网（出门）链路不通 | Tailscale 自动开关：导出前探测外网地址，不可达则广播 `CONNECT_VPN` 拉起（最长等 12s），导出结束自动关闭；任意 HTTP 响应（含 401）即视为链路通，不依赖 Tailscale API |
+
+工程细节：上传顺序为 **内网 → 外网 → Tailscale** 三路依次尝试；配置项（上传地址 / token / Tailscale 地址）全部由 UI 运行时输入，写入 SharedPreferences + 共享 XML 给 hook 进程读取，代码里零硬编码——这也是它能直接开源的前提。
+
+构建侧：debug 签名 keystore 不再硬编码绝对路径，默认 `~/.android/debug.keystore`，可用 `DEBUG_KEYSTORE` 环境变量覆盖（开源仓库的基本修养）。
+
 ## 总结
 
 - **逆向层的核心**：libxposed 新 API + 钩对加解密类拿密钥 + 延迟虚拟打开，避免早期反射崩 App。
