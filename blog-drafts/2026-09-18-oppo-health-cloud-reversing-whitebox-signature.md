@@ -1,9 +1,9 @@
 ---
-title: "OPPO 健康云同步逆向：从抓包到白盒签名的死局（已破）"
+title: "OPPO 健康云同步逆向：从抓包到白盒签名的死局"
 published: 2026-09-18
 tags: [逆向, Android, 安全区]
 category: hermes
-draft: false
+draft: true
 ---
 
 # OPPO 健康云同步逆向：从抓包到白盒签名的死局
@@ -116,17 +116,3 @@ sig = HmacSHA256(mk, canonical) → CMSSignedData protobuf → base64
 3. **方法论收获**：403 结论下早了会误导方向（第一次测试 token 类型就是错的）；重放实验+密钥穷举这种"否定性实验"比正向尝试更有信息量——两组实验直接闭合了死循环的证明链。密码学死锁面前，逆向工程的终点是确认"这条路的门是焊死的"，然后换路。
 
 签名对拍样本已留存（740 条），哪天重启这个方向，5 分钟捡起来。
-
-## 后记（2026-09-22）：死局已破，上面有一处关键误判
-
-四天后重启这个方向，5 分钟真的捡起来了——而且发现"死锁"的证明链有一环是错的。
-
-**误判在哪**：第三步里 `SecKitClient.macSign → libwbkit-seckit3.so` 那条调用链确实是 App 里的真实代码路径，但它只服务于 KMS 协商那类接口。健康数据 API（`v5/c2s/*`）走的**根本不是白盒 native 签名**，而是一个纯 Java 层的 `HmacSHA256(canonical, httpSecret)`——而 `httpSecret` 是 APK `BuildConfig` 里的**静态常量**，XXTEA 加密存放，两个 UUID 逐字符交错当 XXTEA 密钥解出来即可。
-
-**为什么当时没发现**：smali 顺藤摸瓜时先撞见了 SecKitClient/白盒 so（KMS 体系），就顺着走到底推出了"协商需要白盒签名"的完整死锁。实际上健康 API 的签名在另一条更浅的路径上（pk9/HttpSignatureUtil），抓包对拍 50/50 通过——之前第四步"穷举静态值凑不出 HMAC 密钥"失败，是因为穷举列表里没有解出来的 `httpSecret`，而不是密钥真的动态。
-
-**复盘教训**：逆向时"先撞见的正确答案"会遮住"更简单的正确答案"。签名这种东西应该在 smali 里全局搜 `HmacSHA256` 的所有调用点做穷举对拍，而不是顺着一条最显眼的链走到底。白盒和静态密钥经常共存，选择走哪条链决定了你看到的是死局还是一行 Python。
-
-**破局后的完整实现已开源**：[foxlesbiao/oppo-health-cloud-mcp](https://github.com/foxlesbiao/oppo-health-cloud-mcp) —— 无 root、无 LSPosed、无手机依赖，PC 直接拉云端明细（心率/血氧/步数/睡眠/体重/App使用等），MCP 接入任意 agent。签名静态复刻，50/50 对拍通过。附带实测踩坑：python TLS 指纹被网关拦（必须 curl 子进程）、多余请求头参与验签（`virtual-ssoid` 头会直接 403）。
-
-原始结论"抓 cookie 就能用"依然不成立——还需要做一次静态逆向（或者直接用上面的开源实现）；但"需要真机签名代理"这半句错了，真正的依赖只有：抓包拿一次 token，之后全程 PC 独立运行。
