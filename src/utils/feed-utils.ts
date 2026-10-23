@@ -199,7 +199,7 @@ export function buildAtomFeed(opts: {
   <author><name>${escapeXml(authorName)}</name></author>
   <link rel="alternate" href="${escapeXml(siteRoot)}"/>
   <link rel="self" href="${escapeXml(selfLink)}"/>
-  <generator uri="https://github.com/CuteLeaf/Firefly">${escapeXml(generator)}</generator>
+  <generator uri="https://github.com/foxlesbiao/blog">${escapeXml(generator)}</generator>
 ${entryXml}
 </feed>
 `;
