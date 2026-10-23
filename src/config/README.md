@@ -18,7 +18,6 @@ src/config/
 ├── effectsConfig.ts          # 动画特效配置（樱花等）
 ├── expressiveCodeConfig.ts   # 代码高亮配置
 ├── fontConfig.ts             # 字体配置
-├── footerConfig.ts           # 页脚配置
 ├── friendsConfig.ts          # 友链配置
 ├── galleryConfig.ts          # 相册配置
 ├── licenseConfig.ts          # 许可证配置
@@ -56,11 +55,11 @@ import { profileConfig } from "@/config/profileConfig";
 | `backgroundWallpaper.ts` | 背景壁纸配置（壁纸模式、图片、横幅文字、水波纹等） |
 | `commentConfig.ts` | 评论系统配置（Twikoo、Waline、Artalk、Giscus、Disqus） |
 | `coverImageConfig.ts` | 封面图配置（文章封面图、随机封面图 API） |
+| `displaySettingsConfig.ts` | 视图设置面板配置（面板总开关、各设置项开关） |
 | `dynamicConfig.ts` | 动态页面配置（页面标题、描述、评论开关和每页显示数量） |
 | `effectsConfig.ts` | 动画特效配置（樱花数量、速度、尺寸等） |
 | `expressiveCodeConfig.ts` | 代码高亮配置（亮色/暗色主题、折叠、语言徽章） |
 | `fontConfig.ts` | 字体配置（字体列表、回退、预加载） |
-| `footerConfig.ts` | 页脚配置（自定义 HTML 注入，如备案号） |
 | `friendsConfig.ts` | 友链配置（友链列表、页面设置） |
 | `galleryConfig.ts` | 相册配置（相册列表、瀑布流列宽） |
 | `licenseConfig.ts` | 许可证配置（CC 协议等） |
@@ -78,3 +77,4 @@ import { profileConfig } from "@/config/profileConfig";
 - 每个配置文件对应 `types/` 目录下的独立类型定义文件
 - `siteConfig.ts` 只保留站点核心信息，不聚合其他模块配置
 - `navBarConfig.ts` 底部的 `LinkPresets` 可自由自定义导航栏链接的名称、图标和 URL
+- `displaySettingsConfig.ts` 的视图设置面板默认关闭，除了修改配置里的 `enable`，也可以在部署平台（Vercel / Cloudflare 等）设置环境变量 `PUBLIC_DISPLAY_SETTINGS=true` 开启，无需改动配置文件；环境变量优先级更高，取值 `true/1/on/yes` 开启、`false/0/off/no` 关闭
