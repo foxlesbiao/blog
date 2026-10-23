@@ -9,7 +9,7 @@ export const sponsorConfig: SponsorConfig = {
 
 	// 打赏用途说明
 	usage:
-		"您的打赏将用于服务器维护、内容创作和功能开发，帮助我持续提供优质内容。",
+		"如果内容帮到了你，欢迎请我喝杯咖啡 ☕",
 
 	// 是否显示打赏者列表
 	showSponsorsList: true,
@@ -25,34 +25,33 @@ export const sponsorConfig: SponsorConfig = {
 		{
 			name: "支付宝",
 			icon: "fa7-brands:alipay",
-			// 收款码图片路径（需要放在 public 目录下）
-			qrCode: "/assets/images/sponsor/alipay.png",
+			qrCode: "",
 			link: "",
 			description: "使用 支付宝 扫码打赏",
-			enabled: true,
+			enabled: false,
 		},
 		{
 			name: "微信",
 			icon: "fa7-brands:weixin",
-			qrCode: "/assets/images/sponsor/wechat.png",
+			qrCode: "",
 			link: "",
 			description: "使用 微信 扫码打赏",
-			enabled: true,
+			enabled: false,
 		},
 		{
 			name: "ko-fi",
 			icon: "simple-icons:kofi",
 			qrCode: "",
 			link: "https://github.com/foxlesbiao",
-			description: "Buy a Coffee for Firefly",
+			description: "Buy me a coffee",
 			enabled: true,
 		},
 		{
 			name: "爱发电",
 			icon: "simple-icons:afdian",
 			qrCode: "",
-			link: "https://github.com/foxlesbiao",
-			description: "通过 爱发电 进行打赏",
+			link: "https://ifdian.net/a/foxlesbiao",
+			description: "通过 爱发电 支持我",
 			enabled: true,
 		},
 	],
