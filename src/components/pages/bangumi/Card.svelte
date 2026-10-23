@@ -2,17 +2,22 @@
 import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
 import type { UserSubjectCollection } from "@/types/bangumi";
+import type { NsfwMode } from "@/types/nsfw";
+import { getFailedCovers, markCoverFailed } from "@/utils/failed-covers";
+import { isBangumiNsfw } from "@/utils/nsfw-utils";
 
 interface Props {
 	item: UserSubjectCollection;
 	loadImage?: boolean;
 	subjectBaseUrl?: string;
+	nsfw?: NsfwMode; // NSFW 处理："off" | "blur" | "hide"
 }
 
 const {
 	item,
 	loadImage = false,
 	subjectBaseUrl = "https://bangumi.one/subject/",
+	nsfw = "off",
 }: Props = $props();
 
 const STATUS_COLORS: Record<number, string> = {
@@ -55,29 +60,10 @@ const tags = $derived(
 		? item.tags
 		: (item.subject?.tags || []).map((t) => t.name).slice(0, 5),
 );
-const visibleTags = $derived(tags.slice(0, 3));
+const visibleTags = $derived(tags.slice(0, 2));
 const hiddenTagCount = $derived(Math.max(tags.length - visibleTags.length, 0));
 
 const FAILED_COVERS_KEY = "bangumi-failed-covers";
-
-function getFailedCovers(): Set<string> {
-	try {
-		return new Set(JSON.parse(localStorage.getItem(FAILED_COVERS_KEY) || "[]"));
-	} catch {
-		return new Set();
-	}
-}
-
-function markCoverFailed(url: string) {
-	try {
-		const failed = getFailedCovers();
-		failed.add(url);
-		const arr = [...failed];
-		localStorage.setItem(FAILED_COVERS_KEY, JSON.stringify(arr.slice(-200)));
-	} catch {
-		// localStorage 不可用时静默忽略
-	}
-}
 
 const images = $derived(item.subject?.images);
 const coverFallbacks = $derived(
@@ -92,6 +78,9 @@ const year = $derived(
 const statusColor = $derived(STATUS_COLORS[item.type] || "bg-gray-500");
 const score = $derived(item.subject?.score || 0);
 
+// NSFW 封面模糊：mode === "blur" 且命中时模糊封面
+const imageNsfw = $derived(nsfw === "blur" && isBangumiNsfw(item));
+
 // SSR 阶段用第一个 URL，客户端挂载后跳过已知失败的 URL
 let initialSrc = $state("");
 
@@ -99,7 +88,7 @@ $effect(() => {
 	const srcs = coverFallbacks;
 	initialSrc = srcs[0] || "";
 	if (typeof window === "undefined" || srcs.length === 0) return;
-	const failed = getFailedCovers();
+	const failed = getFailedCovers(FAILED_COVERS_KEY);
 	const firstGood = srcs.find((url) => !failed.has(url));
 	if (firstGood) initialSrc = firstGood;
 });
@@ -114,7 +103,7 @@ function handleLoad(e: Event) {
 function handleError(e: Event) {
 	const img = e.currentTarget as HTMLImageElement;
 	const current = img.src;
-	markCoverFailed(current);
+	markCoverFailed(current, FAILED_COVERS_KEY);
 	const idx = coverFallbacks.indexOf(current);
 	if (idx >= 0 && idx < coverFallbacks.length - 1) {
 		img.src = coverFallbacks[idx + 1];
@@ -138,6 +127,7 @@ function handleError(e: Event) {
         data-src={loadImage ? undefined : initialSrc}
         alt={title}
         class="w-full h-full object-cover pointer-events-none opacity-0 transition-all duration-500 ease-out group-hover:scale-105"
+        style={imageNsfw ? "filter: blur(20px)" : undefined}
         loading="lazy"
         decoding="async"
         onload={handleLoad}

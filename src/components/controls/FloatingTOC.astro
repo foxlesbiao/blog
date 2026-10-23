@@ -17,18 +17,13 @@ const { headings = [], encrypted = false } = Astro.props;
 // 加密文章不在服务端渲染目录（避免标题泄露），交由客户端解密后生成
 const items = encrypted ? [] : computeTocItems(headings, { maxLevel: 3 });
 
-// 检查侧边栏目录组件是否启用
-const sidebarTocComponent = sidebarLayoutConfig.rightComponents?.find(
-	(c) => c.type === "sidebarToc",
-);
-const isSidebarTocEnabled = sidebarTocComponent?.enable ?? false;
-const sidebarPosition = sidebarLayoutConfig.position;
+// 悬浮目录的显隐判断已改为直接量 DOM，见下方 script
 const hideSidebarOnPostPage =
 	sidebarLayoutConfig.hideSidebarOnPostPage === true;
 ---
 
 <!-- 悬浮TOC按钮 -->
-<div id="floating-toc-wrapper" class="floating-toc-wrapper" data-is-sidebar-toc-enabled={String(isSidebarTocEnabled)} data-sidebar-position={sidebarPosition} data-show-both-sidebars-on-post={String(sidebarLayoutConfig.showBothSidebarsOnPostPage ?? false)} data-hide-sidebar-on-post={String(hideSidebarOnPostPage)}>
+<div id="floating-toc-wrapper" class="floating-toc-wrapper" data-hide-sidebar-on-post={String(hideSidebarOnPostPage)}>
   <FloatingButton
     id="floating-toc-btn"
     icon="material-symbols:format-list-bulleted"
@@ -41,7 +36,7 @@ const hideSidebarOnPostPage =
   <!-- 悬浮TOC面板 - 移到 Wrapper 内部以便相对定位 -->
   <div
     id="floating-toc-panel"
-    class="floating-toc-panel hide overflow-hidden rounded-2xl shadow-2xl backdrop-blur-lg border border-white/20 dark:border-white/10 md:w-80 w-[calc(100vw-2rem)] md:max-h-96 max-h-[calc(100vh-8rem)] py-3"
+    class="floating-toc-panel hide overflow-hidden rounded-2xl shadow-2xl backdrop-blur-lg border border-white/20 dark:border-white/10 md:w-80 w-[calc(100vw-2rem)] py-3"
     style="background-color: var(--card-bg-transparent);"
     >
     <div class="toc-scroll-container px-3">
@@ -93,6 +88,9 @@ const hideSidebarOnPostPage =
 	position: relative
 	z-index: 999
 	overflow: visible
+	/* 面板与滚动容器共用这一处高度，避免两处 max-height 走散把底部条目裁掉 */
+	/* unquote 必需：Stylus 自带同名数学函数 min()，直接写会在编译期报错 */
+	--floating-toc-max-h: unquote("min(24rem, calc(100vh - 8rem))")
 
 .floating-toc-panel
 	position: absolute
@@ -107,6 +105,7 @@ const hideSidebarOnPostPage =
 	backdrop-filter: blur(20px)
 	-webkit-backdrop-filter: blur(20px)
 	z-index: 1001
+	max-height: var(--floating-toc-max-h)
 	
 	&.show
 		transform: translateY(0)
@@ -120,24 +119,23 @@ const hideSidebarOnPostPage =
 		visibility: hidden
 		
 .toc-scroll-container
-	/* 面板 max-height 24rem 减去面板自身 py-3 上下共 1.5rem */
-	max-height: calc(24rem - 1.5rem)
-
-	@media (max-width: 768px)
-		max-height: calc(24rem - 1.5rem)
+	/* 面板 py-3 上下共 1.5rem */
+	max-height: calc(var(--floating-toc-max-h) - 1.5rem)
 
 /* 响应式调整 - 仅保留 Panel 尺寸调整 */
 @media (max-width: 1024px)
+	.floating-toc-wrapper
+		--floating-toc-max-h: unquote("min(20rem, calc(100vh - 8rem))")
 	.floating-toc-panel
 		width: calc(100vw - 2rem)
 		max-width: 20rem
-		max-height: 20rem
 
 @media (max-width: 768px)
+	.floating-toc-wrapper
+		--floating-toc-max-h: unquote("min(28rem, calc(100vh - 8rem))")
 	.floating-toc-panel
 		width: calc(100vw - 1.5rem)
 		max-width: 20rem
-		max-height: 28rem
 		bottom: calc(100% + 1rem)
 
 /* 暗色主题半透明效果 */
@@ -148,10 +146,6 @@ const hideSidebarOnPostPage =
 
 <script>
   import { TOCManager, isPostPage } from "@/utils/toc-utils";
-
-  // 从 data 属性读取配置
-  const wrapper = document.querySelector('.floating-toc-wrapper');
-  const isSidebarTocEnabled = wrapper?.getAttribute('data-is-sidebar-toc-enabled') === 'true';
 
   if (typeof window.FloatingTOC === "undefined") {
     window.FloatingTOC = {
@@ -193,6 +187,9 @@ const hideSidebarOnPostPage =
 
   // 设置自动关闭功能
   function setupAutoClose() {
+    // 防止 Swup 切页重跑脚本时重复注册监听器
+    if (window.__floatingTOCAutoCloseInit) return;
+    window.__floatingTOCAutoCloseInit = true;
     // 监听页面卸载和隐藏
     window.addEventListener("beforeunload", closeTOC);
     window.addEventListener("pagehide", closeTOC);
@@ -246,32 +243,24 @@ const hideSidebarOnPostPage =
     };
   }
 
+  // 侧栏目录是否占据屏幕空间：折叠、组件级 hidden、组件关闭都会让它量到 0，
+  // 因此不必在客户端复刻几何或显隐规则
+  function isSidebarTocVisible() {
+    const el = document.getElementById("sidebar-toc");
+    if (!el) return false;
+    const rect = el.getBoundingClientRect();
+    return rect.width > 0 && rect.height > 0;
+  }
+
   // 检查是否应该显示悬浮目录
   function shouldShowFloatingTOC() {
-    // 检查是否为文章页面
+    // 只在文章页面显示
     if (!window.FloatingTOC.isPostPage()) {
       return false;
     }
 
-    const wrapper = document.querySelector('.floating-toc-wrapper');
-    const sidebarPosition = wrapper?.getAttribute('data-sidebar-position') || 'left';
-    const showBothSidebarsOnPost = wrapper?.getAttribute('data-show-both-sidebars-on-post') === 'true';
-    const hideSidebarOnPost = wrapper?.getAttribute('data-hide-sidebar-on-post') === 'true';
-
-    // 侧边栏在文章页隐藏时，始终显示悬浮目录
-    if (hideSidebarOnPost) {
-      return true;
-    }
-
-    // 双侧边栏模式（含文章页临时双侧栏）：小屏幕或侧边栏目录未启用时显示悬浮目录
-    const effectiveIsBothSidebars = sidebarPosition === 'both' || showBothSidebarsOnPost;
-    if (effectiveIsBothSidebars) {
-      const isSmallScreen = window.innerWidth < 1280;
-      return isSmallScreen || !isSidebarTocEnabled;
-    }
-
-    // 单侧边栏模式（left或right），对侧没有侧边栏目录，始终显示悬浮目录
-    return true;
+    // 侧栏目录已经可见时不再显示悬浮目录，避免两个目录并存
+    return !isSidebarTocVisible();
   }
 
   // 更新悬浮目录的显示状态

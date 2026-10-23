@@ -1,6 +1,9 @@
 # build output
 dist/
 
+# generated vndb covers
+public/vndb-covers/
+
 # generated types
 .astro/
 
@@ -22,19 +25,25 @@ pnpm-debug.log*
 
 .vercel
 
-# docs
-Firefly-docs/
-
-cache/
-package/
-.obsidian/
+package-lock.json
+bun.lockb
+yarn.lock
 
 # ide
 .idea
 *.iml
 
+# docs
+Firefly-docs/
+
+# lite 版本
+Firefly-Lite/
+
+cache/
+package/
+.obsidian/
+
 # vibe coding
 .codex*
 .claude
-.mimocodeblog-drafts/
-package-lock.json
+.mimocode

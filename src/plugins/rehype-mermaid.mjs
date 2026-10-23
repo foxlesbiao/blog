@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { assertSafeSvgForDom, initMerman, renderSvg } from "@mermanjs/web";
+import { fromHtml } from "hast-util-from-html";
 import { h } from "hastscript";
 import { visit } from "unist-util-visit";
 import {
@@ -107,10 +108,10 @@ export function rehypeMermaid(options = {}) {
 						? `${mermaidCode.slice(0, 200)}…[truncated]`
 						: mermaidCode;
 				if (process.env.NODE_ENV === "development") {
-					console.error("[rehype-mermaid] 渲染失败:", e, preview);
+					console.error("[rehype-mermaid] Render failed:", e, preview);
 				} else {
 					console.error(
-						"[rehype-mermaid] 渲染失败:",
+						"[rehype-mermaid] Render failed:",
 						e instanceof Error ? e.message : String(e),
 					);
 				}
@@ -126,16 +127,17 @@ export function rehypeMermaid(options = {}) {
 				return;
 			}
 
-			// 替换为静态 SVG（浅色 + 深色双版本，CSS 控制显示）
+			// 替换为静态 SVG（浅色 + 深色双版本，CSS 控制显示）。
+			// 用 fromHtml 把 SVG 字符串解析成 element 节点，而不是塞进 { type: "raw" }：
+			// MDX 的 hast-util-to-estree 不支持 raw 节点（会抛 "Cannot handle unknown node `raw`"），
+			// 解析成元素后 MDX / Markdown 两条渲染管线都能正常输出。
 			node.properties = { class: `${DIAGRAM_CONTAINER} ${MERMAID_CONTAINER}` };
+			const lightChildren = fromHtml(lightSvg, { fragment: true }).children;
+			const darkChildren = fromHtml(darkSvg, { fragment: true }).children;
 			node.children = [
 				h("div", { class: `${DIAGRAM_WRAPPER} ${MERMAID_WRAPPER}` }, [
-					h("div", { class: MERMAID_SVG_LIGHT }, [
-						{ type: "raw", value: lightSvg },
-					]),
-					h("div", { class: MERMAID_SVG_DARK }, [
-						{ type: "raw", value: darkSvg },
-					]),
+					h("div", { class: MERMAID_SVG_LIGHT }, lightChildren),
+					h("div", { class: MERMAID_SVG_DARK }, darkChildren),
 				]),
 			];
 		});
