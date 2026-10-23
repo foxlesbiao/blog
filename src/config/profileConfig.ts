@@ -12,7 +12,7 @@ export const profileConfig: ProfileConfig = {
 	name: "Illya-Lily-Iris·Alice",
 
 	// 个人签名
-	bio: "Hello, I'm XiaYe.",
+	bio: "修车、折腾、写代码",
 
 	// 链接配置
 	// 已经预装的图标集：fa7-brands，fa7-regular，fa7-solid，material-symbols，simple-icons
@@ -24,7 +24,7 @@ export const profileConfig: ProfileConfig = {
 		{
 			name: "GitHub",
 			icon: "fa7-brands:github",
-			url: "https://github.com/CuteLeaf",
+			url: "https://github.com/foxlesbiao",
 			showName: false,
 		},
 		{

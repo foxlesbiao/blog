@@ -48,7 +48,7 @@ export const siteConfig: SiteConfig = {
 	subtitle: "修车、折腾、写代码",
 
 	// 站点 URL
-	site_url: "https://firefly.cuteleaf.cn",
+	site_url: "https://foxlesbiao.github.io",
 
 	// 站点描述
 	description:
