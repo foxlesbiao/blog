@@ -72,8 +72,8 @@ importers:
         specifier: ^3.1.7
         version: 3.1.7
       '@mermanjs/web':
-        specifier: 0.9.3
-        version: 0.9.3
+        specifier: 0.8.0-alpha.3
+        version: 0.8.0-alpha.3
       '@napi-rs/wasm-runtime':
         specifier: ^1.2.7
         version: 1.2.7(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)
@@ -1803,8 +1803,8 @@ packages:
   '@mdx-js/mdx@3.1.1':
     resolution: {integrity: sha512-f6ZO2ifpwAQIpzGWaBQT2TXxPv6z3RBzQKpVftEWN78Vl/YweF1uwussDx8ECAXVtr3Rs89fKyG9YlzUs9DyGQ==}
 
-  '@mermanjs/web@0.9.3':
-    resolution: {integrity: sha512-+Oeu4Mr3KGwf0cAKyOC2Ho5HA2jiV+4+Q6zEtw7lNpM6AND0CY0dqI6l5tWF4kFDKuSZT+zMsthieS/exn1Uyw==}
+  '@mermanjs/web@0.8.0-alpha.3':
+    resolution: {integrity: sha512-nuZcWWc/I85RWuFraiJp9LbUIC7zEB+hdWic6TSjV26iRgD9tOE+o/MMH48/h5R10lr4uLz5ec7mhFUOgFARjQ==}
 
   '@napi-rs/wasm-runtime@1.2.4':
     resolution: {integrity: sha512-AJxoUD2/15ESHbvpcyjU274nsAPLuOtPHCk0vKJM5pj//Fg/B1FXNWjPnXTT9PymCYYiHo4zPj0ZomXBKhoy7g==}
@@ -7709,7 +7709,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@mermanjs/web@0.9.3': {}
+  '@mermanjs/web@0.8.0-alpha.3': {}
 
   '@napi-rs/wasm-runtime@1.2.4(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)':
     dependencies:
